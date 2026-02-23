@@ -1,31 +1,38 @@
-
+// UC4: Character Array Based Palindrome Check
 import java.util.Scanner;
 
-public class UseCase3PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        String input = "radar";
 
-        System.out.println("===== Palindrome Checker App (UC3) =====");
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
 
-        String reversed = "";
+        char[] chars = input.toCharArray();
 
-        // Iterate from the last character to the first
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed = reversed + input.charAt(i);
+
+        int start = 0;
+
+
+        int end = chars.length - 1;
+
+
+        boolean isPalindrome = true;
+
+
+        while (start < end) {
+
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+
+            start++;
+            end--;
         }
 
-        // Compare original and reversed string
-        if (input.equals(reversed)) {
-            System.out.println("The given string is a Palindrome.");
-        } else {
-            System.out.println("The given string is NOT a Palindrome.");
-        }
-
-        scanner.close();
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
 
