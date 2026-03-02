@@ -1,89 +1,38 @@
-//UC8: Linked List Based Palindrome Checker
+//UC9: Recursive Palindrome Checker
+
 import java.util.Scanner;
 
-public class PalindromeCheckerApp {
+public class UseCase9PalindromeCheckerApp {
 
-
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Input: ");
-        String input = sc.nextLine().toLowerCase();
+        System.out.print("Input : ");
+        String input = scanner.nextLine();
 
+        boolean result = check(input, 0, input.length() - 1);
 
-        Node head = null, tail = null;
+        System.out.println("Is Palindrome? : " + result);
 
-        for (char c : input.toCharArray()) {
-            Node newNode = new Node(c);
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        boolean isPalindrome = checkPalindrome(head);
-
-        System.out.println("Is Palindrome? : " + isPalindrome);
-
-        sc.close();
+        scanner.close();
     }
 
 
-    public static boolean checkPalindrome(Node head) {
+    private static boolean check(String s, int start, int end) {
 
-        if (head == null || head.next == null)
+
+        if (start >= end) {
             return true;
-
-
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
         }
 
 
-        Node secondHalf = reverse(slow);
-        Node firstHalf = head;
-
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data)
-                return false;
-
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
 
-        return true;
-    }
 
-
-    public static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-
-        return prev;
+        return check(s, start + 1, end - 1);
     }
 }
