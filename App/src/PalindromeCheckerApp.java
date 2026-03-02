@@ -1,8 +1,7 @@
-// UC6: Queue + Stack Based Palindrome Check
+//UC7: Deque-Based Optimized Palindrome Checker
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class PalindromeCheckerApp {
 
@@ -17,23 +16,23 @@ public class PalindromeCheckerApp {
 
         input = input.toLowerCase();
 
-        // Create Queue (FIFO)
-        Queue<Character> queue = new LinkedList<>();
 
-        // Create Stack (LIFO)
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new LinkedList<>();
 
 
         for (char c : input.toCharArray()) {
-            queue.add(c);
-            stack.push(c);
+            deque.addLast(c);
         }
 
         boolean isPalindrome = true;
 
 
-        while (!queue.isEmpty()) {
-            if (queue.remove() != stack.pop()) {
+        while (deque.size() > 1) {
+
+            char front = deque.removeFirst();
+            char rear  = deque.removeLast();
+
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
