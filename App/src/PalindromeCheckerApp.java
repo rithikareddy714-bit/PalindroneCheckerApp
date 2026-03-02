@@ -1,9 +1,8 @@
-//UC9: Recursive Palindrome Checker
+//UC10: Case-Insensitive & Space-Ignored Palindrome
 
 import java.util.Scanner;
 
-public class UseCase9PalindromeCheckerApp {
-
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -12,27 +11,25 @@ public class UseCase9PalindromeCheckerApp {
         System.out.print("Input : ");
         String input = scanner.nextLine();
 
-        boolean result = check(input, 0, input.length() - 1);
 
-        System.out.println("Is Palindrome? : " + result);
+        String normalized = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+
+        boolean isPalindrome = true;
+
+
+        for (int i = 0; i < normalized.length() / 2; i++) {
+
+
+            if (normalized.charAt(i) !=
+                    normalized.charAt(normalized.length() - 1 - i)) {
+
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("Is Palindrome? : " + isPalindrome);
 
         scanner.close();
-    }
-
-
-    private static boolean check(String s, int start, int end) {
-
-
-        if (start >= end) {
-            return true;
-        }
-
-
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-
-        return check(s, start + 1, end - 1);
     }
 }
