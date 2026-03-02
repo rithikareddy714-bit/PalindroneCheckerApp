@@ -1,9 +1,7 @@
-//UC11: Object-Oriented Palindrome ServiceUC11: Object-Oriented Palindrome Service
-
+//UC12: Strategy Pattern for Palindrome Algorithms (Advanced)
 import java.util.Scanner;
 
 public class PalindromeCheckerApp {
-
 
     public static void main(String[] args) {
 
@@ -12,11 +10,22 @@ public class PalindromeCheckerApp {
         System.out.print("Input : ");
         String input = scanner.nextLine();
 
+        System.out.println("Choose Strategy:");
+        System.out.println("1 - Stack Strategy");
+        System.out.println("2 - Deque Strategy");
+        System.out.print("Choice : ");
+        int choice = scanner.nextInt();
 
-        PalindromeService service = new PalindromeService();
+        PalindromeStrategy strategy;
 
+// Inject strategy at runtime
+        if (choice == 1) {
+            strategy = new StackStrategy();
+        } else {
+            strategy = new DequeStrategy();
+        }
 
-        boolean result = service.checkPalindrome(input);
+        boolean result = strategy.check(input);
 
         System.out.println("Is Palindrome? : " + result);
 
@@ -25,24 +34,52 @@ public class PalindromeCheckerApp {
 }
 
 
-class PalindromeService {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
 
-    public boolean checkPalindrome(String input) {
+class StackStrategy implements PalindromeStrategy {
+
+    @Override
+    public boolean check(String input) {
+
+        java.util.Stack<Character> stack = new java.util.Stack<>();
 
 
-        int start = 0;
-        int end = input.length() - 1;
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
 
 
-        while (start < end) {
-
-            if (input.charAt(start) != input.charAt(end)) {
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
+        }
 
-            start++;
-            end--;
+        return true;
+    }
+}
+
+
+class DequeStrategy implements PalindromeStrategy {
+
+    @Override
+    public boolean check(String input) {
+
+        java.util.Deque<Character> deque =
+                new java.util.ArrayDeque<>();
+
+        for (char c : input.toCharArray()) {
+            deque.add(c);
+        }
+
+        while (deque.size() > 1) {
+
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
         }
 
         return true;
